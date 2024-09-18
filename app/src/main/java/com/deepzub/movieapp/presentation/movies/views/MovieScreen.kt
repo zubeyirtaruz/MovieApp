@@ -1,5 +1,6 @@
 package com.deepzub.movieapp.presentation.movies.views
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import com.deepzub.movieapp.presentation.DarkModeSwitch
 import com.deepzub.movieapp.util.connectivityState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalAnimationApi::class, ExperimentalCoroutinesApi::class)
 @Composable
 fun MovieScreen(
@@ -65,8 +67,13 @@ fun MovieScreen(
 
             ConnectivityStatus()
 
-            var value by remember { mutableStateOf(true) }
-            DarkModeSwitch(value, Modifier.padding(8.dp)) { value = it }
+            DarkModeSwitch(
+                checked = viewModel.themeState.value.isDarkMode,
+                Modifier.padding(8.dp),
+                onCheckedChanged = {
+                    viewModel.toggleTheme()
+                }
+            )
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(state.movies) { movie ->

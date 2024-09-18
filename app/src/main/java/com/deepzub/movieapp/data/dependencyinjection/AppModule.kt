@@ -1,16 +1,15 @@
 package com.deepzub.movieapp.data.dependencyinjection
 
 import android.content.Context
-import com.deepzub.movieapp.MovieApplication
 import com.deepzub.movieapp.data.remote.MovieAPI
 import com.deepzub.movieapp.data.repository.MovieRepositoryImpl
 import com.deepzub.movieapp.domain.repository.MovieRepository
-import com.deepzub.movieapp.presentation.no_internet.ConnectivityObserver
-import com.deepzub.movieapp.presentation.no_internet.NetworkConnectivityObserver
 import com.deepzub.movieapp.util.Constants.BASE_URL
+import com.deepzub.movieapp.util.DataStoreUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,5 +34,8 @@ object AppModule {
     fun provideMovieRepository(api: MovieAPI) : MovieRepository {
         return MovieRepositoryImpl(api = api)
     }
+
+    @Provides
+    fun provideDataStoreUtil(@ApplicationContext context: Context):DataStoreUtils = DataStoreUtils(context)
 
 }
