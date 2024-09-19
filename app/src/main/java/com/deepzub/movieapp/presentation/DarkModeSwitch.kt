@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -20,11 +19,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +32,6 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.deepzub.movieapp.R
@@ -46,18 +41,18 @@ import com.deepzub.movieapp.presentation.theme.NightSky
 import kotlinx.coroutines.launch
 
 @Composable
-fun DarkModeSwitch(checked: Boolean, modifier: Modifier, onCheckedChanged: (Boolean) -> Unit) {
+fun DarkModeSwitch(isDarkMode: Boolean, modifier: Modifier, onCheckedChanged: (Boolean) -> Unit) {
 
     val switchWidth = 160.dp
     val switchHeight = 64.dp
     val handleSize = 52.dp
     val handlePadding = 10.dp
 
-    val valueToOffset = if (checked) 1f else 0f
+    val valueToOffset = if (isDarkMode) 1f else 0f
     val offset = remember { Animatable(valueToOffset) }
     val scope = rememberCoroutineScope()
 
-    DisposableEffect(checked) {
+    DisposableEffect(isDarkMode) {
         if (offset.targetValue != valueToOffset) {
             scope.launch {
                 offset.animateTo(valueToOffset, animationSpec = tween(1000))
@@ -75,7 +70,7 @@ fun DarkModeSwitch(checked: Boolean, modifier: Modifier, onCheckedChanged: (Bool
             .background(lerp(BlueSky, NightSky, offset.value))
             .border(3.dp, BorderColor, RoundedCornerShape(switchHeight))
             .toggleable(
-                value = checked,
+                value = isDarkMode,
                 onValueChange = onCheckedChanged,
                 role = Role.Switch,
                 interactionSource = remember { MutableInteractionSource() },

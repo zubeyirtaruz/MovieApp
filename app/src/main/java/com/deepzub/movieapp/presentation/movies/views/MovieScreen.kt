@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -34,6 +35,7 @@ import com.deepzub.movieapp.presentation.movies.MoviesViewModel
 import com.deepzub.movieapp.util.ConnectionState
 import com.deepzub.movieapp.presentation.ConnectivityStatus
 import com.deepzub.movieapp.presentation.DarkModeSwitch
+import com.deepzub.movieapp.presentation.theme.customColorsPalette
 import com.deepzub.movieapp.util.connectivityState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -52,7 +54,7 @@ fun MovieScreen(
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.Black)) {
+        .background(MaterialTheme.customColorsPalette.extraColor1)) {
         Column {
             MovieSearchBar(modifier = Modifier
                 .fillMaxWidth()
@@ -68,7 +70,7 @@ fun MovieScreen(
             ConnectivityStatus()
 
             DarkModeSwitch(
-                checked = viewModel.themeState.value.isDarkMode,
+                isDarkMode = viewModel.themeState.value.isDarkMode,
                 Modifier.padding(8.dp),
                 onCheckedChanged = {
                     viewModel.toggleTheme()
