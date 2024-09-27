@@ -101,4 +101,13 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
+
 }

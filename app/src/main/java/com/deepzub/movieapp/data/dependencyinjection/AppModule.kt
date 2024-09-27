@@ -1,9 +1,14 @@
 package com.deepzub.movieapp.data.dependencyinjection
 
+import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import com.deepzub.movieapp.data.remote.MovieAPI
-import com.deepzub.movieapp.data.repository.MovieRepositoryImpl
-import com.deepzub.movieapp.domain.repository.MovieRepository
+import com.deepzub.movieapp.data.repository.MovieDatabaseRepositoryImpl
+import com.deepzub.movieapp.data.repository.MovieApiRepositoryImpl
+import com.deepzub.movieapp.data.room.datasource.MovieDatabase
+import com.deepzub.movieapp.domain.repository.MovieApiRepository
+import com.deepzub.movieapp.domain.repository.MovieDatabaseRepository
 import com.deepzub.movieapp.util.Constants.BASE_URL
 import com.deepzub.movieapp.util.DataStoreUtils
 import dagger.Module
@@ -31,8 +36,26 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMovieRepository(api: MovieAPI) : MovieRepository {
-        return MovieRepositoryImpl(api = api)
+    fun provideMovieApiRepository(api: MovieAPI) : MovieApiRepository {
+        return MovieApiRepositoryImpl(api = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataBase(app: Application) : MovieDatabase {
+        return Room.databaseBuilder(
+            app,
+            MovieDatabase::class.java,
+            "DataBase"
+        )
+//            .addMigrations() later add migrations if u change the table
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieDatabaseRepository(movieDB: MovieDatabase) : MovieDatabaseRepository {
+        return MovieDatabaseRepositoryImpl(movieDB.movieDao)
     }
 
     @Provides
