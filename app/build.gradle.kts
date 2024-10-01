@@ -107,6 +107,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
 
+    kapt(libs.androidx.room.compiler)
+//    Migrate from kapt to KSP???
+
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 

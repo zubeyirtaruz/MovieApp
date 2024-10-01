@@ -2,12 +2,12 @@ package com.deepzub.movieapp.data.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.deepzub.movieapp.util.Constants.TABLE_NAME
+import com.deepzub.movieapp.util.Constants.MOVIE_ENTITY_TABLE_NAME
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Entity(tableName = TABLE_NAME)
+@Entity(tableName = MOVIE_ENTITY_TABLE_NAME)
 data class MovieEntity(
 
     @PrimaryKey(autoGenerate = true)

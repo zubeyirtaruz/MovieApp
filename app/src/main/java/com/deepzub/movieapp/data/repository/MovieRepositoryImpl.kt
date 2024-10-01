@@ -26,27 +26,27 @@ class MovieApiRepositoryImpl @Inject constructor(private val api : MovieAPI) : M
 
 class MovieDatabaseRepositoryImpl @Inject constructor(private val dao : MovieDao) : MovieDatabaseRepository {
 
-    override suspend fun insert(studentEntity: MovieEntity) {
+    override suspend fun insertMovie(movieEntity: MovieEntity) {
         withContext(IO) {
-            dao.insert(studentEntity)
+            dao.insertMovie(movieEntity)
         }
     }
 
-    override suspend fun delete(studentEntity: MovieEntity) {
+    override suspend fun deleteMovie(movieEntity: MovieEntity) {
         withContext(IO) {
-            dao.delete(studentEntity)
+            dao.deleteMovie(movieEntity)
         }
     }
 
-    override suspend fun update(studentEntity: MovieEntity) {
+    override suspend fun updateMovie(movieEntity: MovieEntity) {
         withContext(IO) {
-            dao.update(studentEntity)
+            dao.updateMovie(movieEntity)
         }
     }
 
-    override suspend fun getAllMovies(): Flow<List<MovieEntity>> {
+    override suspend fun getFavoriteMovies(): Flow<List<MovieEntity>> {
         return withContext(IO) {
-            dao.getAllMovies()
+            dao.getFavoriteMovies()
         }
     }
 
